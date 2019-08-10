@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/animated_list.dart';
+import 'package:flutter_playground/column_screen.dart';
+import 'package:flutter_playground/list_view_no_builder.dart';
+import 'package:flutter_playground/list_view_with_contoller_and_listeners.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,6 +44,28 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => AnimatedListScreenDemo()));
+              },
+            ),
+            RaisedButton(
+              child: Text('Simple list view'),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => SimpleListScreen()));
+              },
+            ),
+            RaisedButton(
+              child: Text('list view with controller'),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => ListScreenWithControllerAndListeners()));
+              },
+            ),
+
+            RaisedButton(
+              child: Text('Column'),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => ColumnScreen()));
               },
             ),
           ],
