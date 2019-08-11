@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/main.dart';
 import 'package:indexed_list_view/indexed_list_view.dart';
 
 const origin = 1000;
@@ -99,7 +100,8 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
       //
       return msg.empty
           ? SizedBox(
-              height: 100,
+              height: 1000,
+              child: circularProgressWithColor(color: Colors.grey),
             )
           : Card(
               child: Container(

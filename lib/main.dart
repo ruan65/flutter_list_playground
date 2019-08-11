@@ -83,3 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+Widget circularProgressWithColor({Color color = Colors.black}) => Center(
+  child: CircularProgressIndicator(
+    valueColor: AlwaysStoppedAnimation<Color>(color),
+  ),
+);
