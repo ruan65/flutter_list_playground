@@ -39,16 +39,26 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     super.dispose();
   }
 
-  void jumpToOrigin() =>
-      controller.jumpToIndexAndOffset(index: origin - 1, offset: 30);
+  Future jumpToOrigin() async {
+    await Future.delayed(Duration(milliseconds: 10));
+    controller.jumpToIndexAndOffset(index: origin - 1, offset: 30);
+  }
+
+  Future jumpToLatestNewMessage() async {
+    await Future.delayed(Duration(milliseconds: 10));
+    controller.jumpToIndexAndOffset(index: newMark - 1, offset: -200);
+  }
 
   @override
   Widget build(BuildContext context) {
     //
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        addNewMessage();
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          addNewMessage();
+        },
+        child: Icon(Icons.message),
+      ),
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
@@ -99,15 +109,24 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     //
     return (BuildContext context, int index) {
       final msg = messages[index];
-      print('in the item builder index = $index historyMark = $historyMark');
+      print(
+          'in the item builder \nnewMark: $newMark \nindex = $index \nhistoryMark = $historyMark');
       if (index - historyMark < triggerLoadNewPortionOfHistoryThreshold) {
         addHistoryMessages();
       }
+
+//      if (index - newMark > 2) {
+//        jumpToLatestNewMessage();
+//      }
       //
       return msg.empty
           ? SizedBox(
-              height: 1000,
-              child: circularProgressWithColor(color: Colors.grey),
+              height: 300,
+              child: Container(
+                height: 10,
+                width: 10,
+                child: index > origin - 1 ? SizedBox.shrink() : circularProgressWithColor(color: Colors.grey[300]),
+              ),
             )
           : Card(
               child: Container(
@@ -160,6 +179,7 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
       messages[newMark] = chatMessage;
       newMark++;
     });
+    jumpToLatestNewMessage();
   }
 }
 
