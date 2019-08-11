@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:indexed_list_view/indexed_list_view.dart';
 
-const origin = 100;
-const limit = 10;
+const origin = 1000;
+const limit = 5;
 const newMsgInitial = 3;
 
 class IndexedListScreen extends StatefulWidget {
@@ -20,14 +20,18 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
 //      print(controller.position);
         });
 
+  final rnd = Random();
   int historyMark, newMark;
 
   @override
   void initState() {
     super.initState();
-    controller.jumpToIndex(origin);
+    jumpToOrigin();
     historyMark = origin - limit;
   }
+
+  void jumpToOrigin() =>
+      controller.jumpToIndexAndOffset(index: origin - 1, offset: 30);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
             ),
             onPressed: () {
               print('jumping to origin');
-              controller.jumpToIndex(origin);
+              jumpToOrigin();
             },
           ),
           IconButton(
@@ -51,7 +55,6 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
               child: Icon(Icons.add),
             ),
             onPressed: () {
-              print('adding');
               addMessages();
             },
           ),
@@ -64,33 +67,87 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     );
   }
 
-  final List<double> heights = new List<double>.generate(
-      527, (i) => Random().nextInt(200).toDouble() + 30.0);
+  List<double> heights = List<double>.generate(
+      origin * 2, (i) => Random().nextInt(200).toDouble() + 60.0);
 
-  final List<String> texts = new List<String>.generate(1000, (index) {
-    if (index >= origin && index < origin + 3) {
-      return 'New message #$index';
-    } else if (index < origin && index > origin - limit) {
-      return 'History message #$index';
+  List<ChatMessage> messages = List<ChatMessage>.generate(origin * 2, (pos) {
+    if (pos >= origin && pos < origin + 3) {
+      return ChatMessage()
+        ..colorInt = 0xFF99FF99
+        ..text = 'New Message at index: $pos'
+        ..empty = false
+        ..history = false
+        ..createdAt = DateTime.now().toIso8601String();
+    } else if (pos < origin && pos >= origin - limit) {
+      return ChatMessage()
+        ..colorInt = 0xFFFF9999
+        ..text = 'History Message at index: $pos'
+        ..empty = false
+        ..history = true
+        ..createdAt = DateTime.now().toIso8601String();
     } else {
-      return 'no messages here on $index';
+      return ChatMessage();
     }
   });
 
   Function itemBuilder() {
     //
     return (BuildContext context, int index) {
-      print(index);
+      final msg = messages[index];
+      print('index in the item builder: $index');
+      print('message in the item builder: $msg');
       //
-      return Card(
-        child: Container(
-          height: heights[index % 527],
-          color: index >= origin ? Colors.green : Colors.blue,
-          child: Center(child: Text(texts[index.abs()])),
-        ),
-      );
+      return msg.empty
+          ? SizedBox(
+              height: 100,
+            )
+          : Card(
+              child: Container(
+                height: heights[index % origin],
+                color: msg.empty ? Colors.white : Color(msg.colorInt),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(msg.text),
+                      Text(msg.createdAt),
+                    ],
+                  ),
+                ),
+              ),
+            );
     };
   }
 
-  void addMessages() {}
+  void addMessages() {
+    int color = rnd.nextInt(0xFFFFFFFF);
+    setState(() {
+      print('adding');
+      int i = historyMark - limit;
+      for (; i < historyMark; i++) {
+        print('adding message... i = $i');
+        messages[i] = ChatMessage()
+          ..colorInt = color
+          ..text = 'DownLoaded History Message from mark: $historyMark #: $i'
+          ..empty = false
+          ..history = true
+          ..createdAt = DateTime.now().toIso8601String();
+      }
+      historyMark -= limit;
+    });
+    print('hm $historyMark');
+    print(messages.length);
+  }
+}
+
+class ChatMessage {
+  int colorInt = 0xFFFFFFFF;
+  bool history = true;
+  bool empty = true;
+  String text = '';
+  String createdAt = '';
+  @override
+  String toString() {
+    return 'ChatMessage{history: $history, empty: $empty, text: $text, createdAt: $createdAt}';
+  }
 }
