@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/main.dart';
 import 'package:indexed_list_view/indexed_list_view.dart';
 
-const origin = 1000;
-const limit = 5;
+const origin = 5000;
+const limit = 20;
 const newMsgInitial = 3;
 
 class IndexedListScreen extends StatefulWidget {
@@ -16,10 +17,7 @@ class IndexedListScreen extends StatefulWidget {
 class _IndexedListScreenState extends State<IndexedListScreen> {
 //
   final IndexedScrollController controller =
-      IndexedScrollController(initialIndex: -1)
-        ..addListener(() {
-//      print(controller.position);
-        });
+      IndexedScrollController(initialIndex: -1);
 
   final rnd = Random();
   int historyMark, newMark;
@@ -29,6 +27,15 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     super.initState();
     jumpToOrigin();
     historyMark = origin - limit;
+//    controller.addListener(() {
+//      print('orig index: ${controller.index}');
+//    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   void jumpToOrigin() =>
@@ -95,8 +102,10 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     //
     return (BuildContext context, int index) {
       final msg = messages[index];
-      print('index in the item builder: $index');
-      print('message in the item builder: $msg');
+      print('in the item builder index = $index historyMark = $historyMark');
+      if (historyMark - index < 10) {
+        addMessages();
+      }
       //
       return msg.empty
           ? SizedBox(
@@ -121,24 +130,26 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     };
   }
 
-  void addMessages() {
-    int color = rnd.nextInt(0xFFFFFFFF);
-    setState(() {
-      print('adding');
-      int i = historyMark - limit;
-      for (; i < historyMark; i++) {
-        print('adding message... i = $i');
-        messages[i] = ChatMessage()
-          ..colorInt = color
-          ..text = 'DownLoaded History Message from mark: $historyMark #: $i'
-          ..empty = false
-          ..history = true
-          ..createdAt = DateTime.now().toIso8601String();
-      }
-      historyMark -= limit;
+  Future addMessages() async {
+    await Future.delayed(Duration(milliseconds: 2000), () {
+      int color = rnd.nextInt(0xFFFFFFFF);
+      setState(() {
+        print('adding');
+        int i = historyMark - limit;
+        for (; i < historyMark; i++) {
+          print('adding message... i = $i');
+          messages[i] = ChatMessage()
+            ..colorInt = color
+            ..text = 'DownLoaded History Message from mark: $historyMark #: $i'
+            ..empty = false
+            ..history = true
+            ..createdAt = DateTime.now().toIso8601String();
+        }
+        historyMark -= limit;
+      });
+      print('hm $historyMark');
+      print(messages.length);
     });
-    print('hm $historyMark');
-    print(messages.length);
   }
 }
 
