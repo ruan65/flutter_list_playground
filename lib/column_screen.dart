@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ColumnScreen extends StatefulWidget {
@@ -6,20 +8,19 @@ class ColumnScreen extends StatefulWidget {
 }
 
 class _ColumnScreenState extends State<ColumnScreen> {
-
-  List<Widget> items = List<Widget>.filled(100, Text('hello'), growable: true);
+//  List<Widget> items = List<Widget>()..length = 20;
+  List<Widget> items = [];
 
   final _scrollController = ScrollController(initialScrollOffset: 100);
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    items[0] = Text('hi');
-    items[2] = Text('hi');
-    items[3] = Text('hi');
+    items.addAll(getItems(Random().nextInt(1000000)));
+//    items = getItems();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +46,36 @@ class _ColumnScreenState extends State<ColumnScreen> {
   }
 
   addToList() {
-    items.addAll(getItems());
+    print('adding...');
+    items.insertAll(0, getItems(Random().nextInt(1000000)));
+    print(items);
+    setState(() {
+
+    });
   }
 
-  List<Widget> getItems() {
-    return List<Widget>.generate(100, (i) {
-      return Padding(
+  Widget getItem(ItemData data) {
+    return Card(
+      elevation: 2,
+      child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text('hi $i'),
-      );
-    });
+        child: Text(data.text),
+      ),
+    );
+  }
+
+  List<Widget> getItems(int mark) {
+    return List<ItemData>.generate(20, (i) => ItemData('hello $mark'))
+        .map((data) => getItem(data))
+        .toList();
+  }
+}
+
+class ItemData {
+  final String text;
+  String dateTime;
+
+  ItemData(this.text) {
+    dateTime = DateTime.now().toIso8601String();
   }
 }

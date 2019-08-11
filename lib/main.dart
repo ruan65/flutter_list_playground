@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/animated_list.dart';
 import 'package:flutter_playground/column_screen.dart';
+import 'package:flutter_playground/indexed_list_screen.dart';
 import 'package:flutter_playground/list_view_no_builder.dart';
 import 'package:flutter_playground/list_view_with_contoller_and_listeners.dart';
 
@@ -66,6 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => ColumnScreen()));
+              },
+            ),
+
+            RaisedButton(
+              child: Text('INDEXED'),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => IndexedListScreen()));
               },
             ),
           ],
