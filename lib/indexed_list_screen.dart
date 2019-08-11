@@ -8,6 +8,7 @@ import 'package:indexed_list_view/indexed_list_view.dart';
 const origin = 5000;
 const limit = 20;
 const newMsgInitial = 3;
+const triggerLoadNewPortionOfHistoryThreshold = 10;
 
 class IndexedListScreen extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
       IndexedScrollController(initialIndex: -1);
 
   final rnd = Random();
-  int historyMark, newMark;
+  int historyMark, newMark = origin;
 
   @override
   void initState() {
@@ -45,6 +46,9 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
   Widget build(BuildContext context) {
     //
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        addNewMessage();
+      }),
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
@@ -63,7 +67,7 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
               child: Icon(Icons.add),
             ),
             onPressed: () {
-              addMessages();
+              addHistoryMessages();
             },
           ),
         ],
@@ -79,14 +83,7 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
       origin * 2, (i) => Random().nextInt(200).toDouble() + 60.0);
 
   List<ChatMessage> messages = List<ChatMessage>.generate(origin * 2, (pos) {
-    if (pos >= origin && pos < origin + 3) {
-      return ChatMessage()
-        ..colorInt = 0xFF99FF99
-        ..text = 'New Message at index: $pos'
-        ..empty = false
-        ..history = false
-        ..createdAt = DateTime.now().toIso8601String();
-    } else if (pos < origin && pos >= origin - limit) {
+    if (pos < origin && pos >= origin - limit) {
       return ChatMessage()
         ..colorInt = 0xFFFF9999
         ..text = 'History Message at index: $pos'
@@ -103,8 +100,8 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     return (BuildContext context, int index) {
       final msg = messages[index];
       print('in the item builder index = $index historyMark = $historyMark');
-      if (historyMark - index < 10) {
-        addMessages();
+      if (index - historyMark < triggerLoadNewPortionOfHistoryThreshold) {
+        addHistoryMessages();
       }
       //
       return msg.empty
@@ -130,7 +127,7 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
     };
   }
 
-  Future addMessages() async {
+  Future addHistoryMessages() async {
     await Future.delayed(Duration(milliseconds: 2000), () {
       int color = rnd.nextInt(0xFFFFFFFF);
       setState(() {
@@ -149,6 +146,19 @@ class _IndexedListScreenState extends State<IndexedListScreen> {
       });
       print('hm $historyMark');
       print(messages.length);
+    });
+  }
+
+  void addNewMessage() {
+    var chatMessage = ChatMessage()
+      ..colorInt = 0xFF99FF99
+      ..text = 'New Message at index: $newMark'
+      ..empty = false
+      ..history = false
+      ..createdAt = DateTime.now().toIso8601String();
+    setState(() {
+      messages[newMark] = chatMessage;
+      newMark++;
     });
   }
 }
