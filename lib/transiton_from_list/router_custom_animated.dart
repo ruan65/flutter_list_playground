@@ -23,8 +23,12 @@ class CustomAnimatedRouter extends PageRouteBuilder {
 
               Animation<double> tweenAnimation = tween.animate(curvedAnimation);
 
-              return FadeTransition(
-                opacity: tweenAnimation,
+//              return FadeTransition(
+//                opacity: tweenAnimation,
+//                child: child,
+//              );
+              return ScaleTransition(
+                scale: tweenAnimation,
                 child: child,
               );
             });
