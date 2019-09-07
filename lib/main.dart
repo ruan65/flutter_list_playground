@@ -5,6 +5,7 @@ import 'package:flutter_playground/column_screen.dart';
 import 'package:flutter_playground/indexed_list_screen.dart';
 import 'package:flutter_playground/list_view_no_builder.dart';
 import 'package:flutter_playground/list_view_with_contoller_and_listeners.dart';
+import 'package:flutter_playground/transiton_from_list/list_of_cards.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,6 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            RaisedButton(
+              child: Text('Transition from list item'),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => ListOfCards()));
+              },
+            ),
             RaisedButton(
               child: Text('Classical Screen'),
               onPressed: () {
