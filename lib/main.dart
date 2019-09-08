@@ -7,6 +7,9 @@ import 'package:flutter_playground/list_view_no_builder.dart';
 import 'package:flutter_playground/list_view_with_contoller_and_listeners.dart';
 import 'package:flutter_playground/transiton_from_list/list_of_cards.dart';
 
+import 'animation_training/animation_stars.dart';
+import 'animation_training/music_album_animation.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -17,8 +20,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ListOfCards(),
-//      home: MyHomePage(title: 'Flutter Demo Home Page'),
+//      home: ListOfCards(),
+      home: MusicAlbumAnimation(),
+//      home: AnimationStarsScreen(),
+//      home: MyHomePage(),
     );
   }
 }
@@ -37,6 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            RaisedButton(
+              child: Text('Animation stars'),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => AnimationStarsScreen()));
+              },
+            ),
             RaisedButton(
               child: Text('Transition from list item'),
               onPressed: () {
