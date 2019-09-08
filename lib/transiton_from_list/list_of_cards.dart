@@ -30,9 +30,9 @@ class _ListOfCardsState extends State<ListOfCards>
 Widget card(
     BuildContext context, Color color, TickerProviderStateMixin ticker) {
   AnimationController ctrl =
-      AnimationController(vsync: ticker, duration: Duration(milliseconds: 500));
+      AnimationController(vsync: ticker, duration: Duration(milliseconds: 200));
 
-  Animation<double> anim = Tween(begin: 1.0, end: 0.5).animate(ctrl);
+  Animation<double> anim = Tween(begin: 1.0, end: 0.98).animate(ctrl);
 
   navigateToDetailed() {
     Navigator.push(
