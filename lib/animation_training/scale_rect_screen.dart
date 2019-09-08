@@ -13,9 +13,18 @@ class _ScaleRectScreenState extends State<ScaleRectScreen>
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     animation = Tween(begin: 1.0, end: 0.5).animate(controller);
-    controller.forward();
+
+    animation.addListener(() {
+      if (animation.isCompleted) print('completed 1');
+    });
+
+    animation.addListener(() {
+      if (animation.isCompleted) print('completed 2');
+    });
+//    controller.forward();
   }
 
   @override
@@ -24,10 +33,18 @@ class _ScaleRectScreenState extends State<ScaleRectScreen>
       body: Center(
         child: ScaleTransition(
           scale: animation,
-          child: Container(
-            height: 100,
-            width: 210,
-            color: Colors.red,
+          child: GestureDetector(
+            onTap: () {
+              controller.forward();
+            },
+            onLongPressStart: (_) {
+              controller.forward();
+            },
+            child: Container(
+              height: 100,
+              width: 210,
+              color: Colors.red,
+            ),
           ),
         ),
       ),
