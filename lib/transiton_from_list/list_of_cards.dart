@@ -13,18 +13,8 @@ class ListOfCards extends StatefulWidget {
 
 class _ListOfCardsState extends State<ListOfCards>
     with TickerProviderStateMixin {
-  final rnd = math.Random();
-  AnimationController animController;
-  Animation<double> anim;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    animController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    anim = Tween(begin: 150.0, end: 90.0).animate(animController);
-  }
+  final rnd = math.Random();
 
   @override
   Widget build(BuildContext context) {
@@ -32,23 +22,39 @@ class _ListOfCardsState extends State<ListOfCards>
         body: ListView.builder(
             itemCount: 10,
             itemBuilder: (context, index) =>
-                card(context, Colors.purple, anim)));
+                card(context, Colors.purple, this)));
 //                card(context, getRandomColor(rnd))));
   }
 }
 
-Widget card(BuildContext context, Color color, Animation<double> anim) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-          context,
-//        MaterialPageRoute(builder: (context) => DetailedScreen(color)),
-          CustomAnimatedRouter(DetailedScreen(color)));
-    },
-    onLongPressStart: (details) {
-      print('logn press ${details.globalPosition}');
+Widget card(
+    BuildContext context, Color color, TickerProviderStateMixin ticker) {
+  AnimationController ctrl =
+      AnimationController(vsync: ticker, duration: Duration(milliseconds: 500));
 
-    },
+  Animation<double> anim = Tween(begin: 1.0, end: 0.5).animate(ctrl);
+
+  navigateToDetailed() {
+    Navigator.push(
+        context,
+        CustomAnimatedRouter(DetailedScreen(color)));
+  }
+
+  anim.addListener(() {
+    if(anim.isCompleted) {
+      navigateToDetailed();
+      ctrl.reset();
+    }
+  });
+
+
+  scaleAndNavigate() {
+    ctrl.forward();
+  }
+
+  return GestureDetector(
+    onTap: scaleAndNavigate,
+    onLongPressStart: (_) => scaleAndNavigate(),
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: ScaleTransition(

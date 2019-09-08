@@ -35,7 +35,7 @@ class _ScaleRectScreenState extends State<ScaleRectScreen>
           scale: animation,
           child: GestureDetector(
             onTap: () {
-              controller.forward();
+              controller.reverse();
             },
             onLongPressStart: (_) {
               controller.forward();

@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-//      home: ListOfCards(),
-      home: ScaleRectScreen(),
+      home: ListOfCards(),
+//      home: ScaleRectScreen(),
 //      home: MusicAlbumAnimation(),
 //      home: AnimationStarsScreen(),
 //      home: MyHomePage(),
