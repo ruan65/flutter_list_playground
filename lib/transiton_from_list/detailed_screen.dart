@@ -19,17 +19,19 @@ class _DetailedScreenState extends State<DetailedScreen> {
         children: <Widget>[
           Hero(
             tag: widget.heroTag,
-            child: Container(
-              height: 300,
-              color: widget.color,
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      }),
-                ],
+            child: Material(
+              child: Container(
+                height: 300,
+                color: widget.color,
+                child: Row(
+                  children: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        }),
+                  ],
+                ),
               ),
             ),
           ),

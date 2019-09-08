@@ -22,8 +22,8 @@ class _ListOfCardsState extends State<ListOfCards>
         body: ListView.builder(
             itemCount: 10,
             itemBuilder: (context, index) =>
-                card(context, Colors.purple, this, index)));
-//                card(context, getRandomColor(rnd))));
+                card(context, getRandomColor(rnd), this, index)));
+//                card(context, Colors.purple, this, index)));
   }
 }
 
@@ -67,8 +67,8 @@ Widget card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            elevation: 5,
-            color: Colors.purple,
+//            elevation: 5,
+            color: color,
             child: Container(
               height: 150,
             ),
