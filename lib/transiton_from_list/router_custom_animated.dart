@@ -15,10 +15,10 @@ class CustomAnimatedRouter extends PageRouteBuilder {
 
               CurvedAnimation curvedAnimation = CurvedAnimation(
                 parent: anim,
-                curve: Curves.fastOutSlowIn,
+                curve: Curves.fastLinearToSlowEaseIn,
               );
 
-              Tween<double> tween = Tween(begin: 0.0, end: 1.0);
+              Tween<double> tween = Tween(begin: 0.3, end: 1.0);
 
 
               Animation<double> tweenAnimation = tween.animate(curvedAnimation);

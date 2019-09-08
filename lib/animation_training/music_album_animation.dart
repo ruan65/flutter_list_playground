@@ -22,8 +22,13 @@ class _MusicAlbumAnimationState extends State<MusicAlbumAnimation>
     _controller2 =
         AnimationController(vsync: this, duration: Duration(milliseconds: ms2));
 
-    _animation = Tween(begin: 0.0, end: 0.5).animate(
+    _animation = Tween(begin: 0.2, end: 0.7).animate(
         CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+
+//    _animation = Tween(begin: 0.2, end: 0.7).animate(
+//        CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+
+//    _animation = CurvedAnimation(parent: _controller2, curve: Curves.easeInOut);
 
     _animation.addListener(() {
       setState(() {});
@@ -56,8 +61,37 @@ class _MusicAlbumAnimationState extends State<MusicAlbumAnimation>
             'assets/mic.jpeg',
             fit: BoxFit.cover,
           ),
-        )
+        ),
+        _centralButton(),
+        Positioned(
+          top: 10,
+          left: 10,
+          child: RotationTransition(
+            turns: _controller1,
+            child: Icon(Icons.play_arrow),
+          ),
+        ),
       ],
     );
+  }
+
+  Widget _centralButton() {
+    return Center(
+      child: ScaleTransition(
+        scale: _controller2,
+        child: CircleAvatar(
+          radius: 35,
+          backgroundColor: Colors.transparent,
+          backgroundImage: AssetImage('assets/adel.png'),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
   }
 }
