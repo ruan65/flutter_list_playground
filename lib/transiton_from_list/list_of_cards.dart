@@ -22,27 +22,29 @@ class _ListOfCardsState extends State<ListOfCards>
         body: ListView.builder(
             itemCount: 10,
             itemBuilder: (context, index) =>
-                card(context, Colors.purple, this)));
+                card(context, Colors.purple, this, index)));
 //                card(context, getRandomColor(rnd))));
   }
 }
 
 Widget card(
-    BuildContext context, Color color, TickerProviderStateMixin ticker) {
+    BuildContext context, Color color, TickerProviderStateMixin ticker, int index) {
+  
+  String heroTag = 'hero$index';
   AnimationController ctrl =
       AnimationController(vsync: ticker, duration: Duration(milliseconds: 200));
 
   Animation<double> anim = Tween(begin: 1.0, end: 0.98).animate(ctrl);
 
-  navigateToDetailed() {
+  navigateToDetailed(String heroTag) {
     Navigator.push(
         context,
-        CustomAnimatedRouter(DetailedScreen(color)));
+        CustomAnimatedRouter(DetailedScreen(color, heroTag)));
   }
 
   anim.addListener(() {
     if(anim.isCompleted) {
-      navigateToDetailed();
+      navigateToDetailed(heroTag);
       ctrl.reset();
     }
   });
@@ -59,14 +61,17 @@ Widget card(
       padding: const EdgeInsets.all(8.0),
       child: ScaleTransition(
         scale: anim,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          elevation: 5,
-          color: Colors.purple,
-          child: Container(
-            height: 150,
+        child: Hero(
+          tag: heroTag,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 5,
+            color: Colors.purple,
+            child: Container(
+              height: 150,
+            ),
           ),
         ),
       ),

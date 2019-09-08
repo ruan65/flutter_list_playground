@@ -5,7 +5,7 @@ class CustomAnimatedRouter extends PageRouteBuilder {
 
   CustomAnimatedRouter(this.widget)
       : super(
-            transitionDuration: Duration(milliseconds: 1500),
+            transitionDuration: Duration(milliseconds: 500),
             pageBuilder: (BuildContext context, Animation<double> anim,
                 Animation<double> secondaryAnim) {
               return widget;
@@ -15,7 +15,7 @@ class CustomAnimatedRouter extends PageRouteBuilder {
 
               CurvedAnimation curvedAnimation = CurvedAnimation(
                 parent: anim,
-                curve: Curves.fastLinearToSlowEaseIn,
+                curve: Curves.easeInQuint,
               );
 
               Tween<double> tween = Tween(begin: 0.3, end: 1.0);
@@ -23,10 +23,6 @@ class CustomAnimatedRouter extends PageRouteBuilder {
 
               Animation<double> tweenAnimation = tween.animate(curvedAnimation);
 
-//              return FadeTransition(
-//                opacity: tweenAnimation,
-//                child: child,
-//              );
               return ScaleTransition(
                 scale: tweenAnimation,
                 child: child,

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class DetailedScreen extends StatefulWidget {
   final Color color;
+  final String heroTag;
 
-  const DetailedScreen(this.color);
+  const DetailedScreen(this.color, this.heroTag);
 
   @override
   _DetailedScreenState createState() => _DetailedScreenState();
@@ -16,17 +17,20 @@ class _DetailedScreenState extends State<DetailedScreen> {
         body: SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          Container(
-            height: 300,
-            color: widget.color,
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    }),
-              ],
+          Hero(
+            tag: widget.heroTag,
+            child: Container(
+              height: 300,
+              color: widget.color,
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                ],
+              ),
             ),
           ),
           Container(
