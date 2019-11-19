@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/animated_list.dart';
-import 'package:flutter_playground/animation_training/scale_rect_screen.dart';
 import 'package:flutter_playground/classical_screen.dart';
 import 'package:flutter_playground/column_screen.dart';
 import 'package:flutter_playground/indexed_list_screen.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_playground/list_view_with_contoller_and_listeners.dart';
 import 'package:flutter_playground/transiton_from_list/list_of_cards.dart';
 
 import 'animation_training/animation_stars.dart';
+import 'cook_book_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,11 +20,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ListOfCards(),
+//      home: ListOfCards(),
 //      home: ScaleRectScreen(),
 //      home: MusicAlbumAnimation(),
 //      home: AnimationStarsScreen(),
-//      home: MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
@@ -35,72 +35,87 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              child: Text('Animation stars'),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => AnimationStarsScreen()));
-              },
-            ),
-            RaisedButton(
-              child: Text('Transition from list item'),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (ctx) => ListOfCards()));
-              },
-            ),
-            RaisedButton(
-              child: Text('Classical Screen'),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => ClassicalScreen()));
-              },
-            ),
-            RaisedButton(
-              child: Text('Animated list view'),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => AnimatedListScreenDemo()));
-              },
-            ),
-            RaisedButton(
-              child: Text('Simple list view'),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => SimpleListScreen()));
-              },
-            ),
-            RaisedButton(
-              child: Text('list view with controller'),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => ListScreenWithControllerAndListeners()));
-              },
-            ),
-            RaisedButton(
-              child: Text('Column'),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (ctx) => ColumnScreen()));
-              },
-            ),
-            RaisedButton(
-              child: Text('INDEXED'),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => IndexedListScreen()));
-              },
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                child: Text('Animation stars'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => AnimationStarsScreen()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Transition from list item'),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (ctx) => ListOfCards()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Classical Screen'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => ClassicalScreen()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Animated list view'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => AnimatedListScreenDemo()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Simple list view'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => SimpleListScreen()));
+                },
+              ),
+              RaisedButton(
+                child: Text('list view with controller'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) =>
+                          ListScreenWithControllerAndListeners()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Column'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => ColumnScreen()));
+                },
+              ),
+              RaisedButton(
+                child: Text('INDEXED'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => IndexedListScreen()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Cards'),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (ctx) => ListOfCards()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Cook book'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => CookbookList()));
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -13,23 +13,22 @@ class ListOfCards extends StatefulWidget {
 
 class _ListOfCardsState extends State<ListOfCards>
     with TickerProviderStateMixin {
-
   final rnd = math.Random();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(),
         body: ListView.builder(
-            itemCount: 10,
+            itemCount: 100,
             itemBuilder: (context, index) =>
                 card(context, getRandomColor(rnd), this, index)));
 //                card(context, Colors.purple, this, index)));
   }
 }
 
-Widget card(
-    BuildContext context, Color color, TickerProviderStateMixin ticker, int index) {
-  
+Widget card(BuildContext context, Color color, TickerProviderStateMixin ticker,
+    int index) {
   String heroTag = 'hero$index';
   AnimationController ctrl =
       AnimationController(vsync: ticker, duration: Duration(milliseconds: 200));
@@ -38,17 +37,15 @@ Widget card(
 
   navigateToDetailed(String heroTag) {
     Navigator.push(
-        context,
-        CustomAnimatedRouter(DetailedScreen(color, heroTag)));
+        context, CustomAnimatedRouter(DetailedScreen(color, heroTag)));
   }
 
   anim.addListener(() {
-    if(anim.isCompleted) {
+    if (anim.isCompleted) {
       navigateToDetailed(heroTag);
       ctrl.reset();
     }
   });
-
 
   scaleAndNavigate() {
     ctrl.forward();
