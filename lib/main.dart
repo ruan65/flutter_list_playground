@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/animated_list.dart';
 import 'package:flutter_playground/classical_screen.dart';
 import 'package:flutter_playground/column_screen.dart';
+import 'package:flutter_playground/cook_book_list_android_physics.dart';
+import 'package:flutter_playground/cook_book_list_asp_physics.dart';
+import 'package:flutter_playground/cook_book_list_ios_physics.dart';
 import 'package:flutter_playground/indexed_list_screen.dart';
 import 'package:flutter_playground/list_view_no_builder.dart';
-import 'package:flutter_playground/list_view_with_contoller_and_listeners.dart';
 import 'package:flutter_playground/transiton_from_list/list_of_cards.dart';
 
-import 'animation_training/animation_stars.dart';
 import 'cook_book_list.dart';
 
 void main() => runApp(MyApp());
@@ -44,12 +45,49 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RaisedButton(
-                child: Text('Animation stars'),
+                child: Text('Cards'),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => AnimationStarsScreen()));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (ctx) => ListOfCards()));
                 },
               ),
+              RaisedButton(
+                child: Text('Cook book'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => CookbookList()));
+                },
+              ),
+              RaisedButton(
+                child: Text('Cook book ios BouncingScrollPhysics'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => CookbookListIOsPhysics()));
+                },
+              ),
+
+              RaisedButton(
+                child: Text('Cook book CookbookListPageScrollPhysics'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => CookbookListPageScrollPhysics()));
+                },
+              ),
+
+              RaisedButton(
+                child: Text('Cook book AlwaysScrollableScrollPhysics'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => CookbookListASPhysics()));
+                },
+              ),
+//              RaisedButton(
+//                child: Text('Animation stars'),
+//                onPressed: () {
+//                  Navigator.of(context).push(MaterialPageRoute(
+//                      builder: (ctx) => AnimationStarsScreen()));
+//                },
+//              ),
               RaisedButton(
                 child: Text('Transition from list item'),
                 onPressed: () {
@@ -78,14 +116,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       MaterialPageRoute(builder: (ctx) => SimpleListScreen()));
                 },
               ),
-              RaisedButton(
-                child: Text('list view with controller'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) =>
-                          ListScreenWithControllerAndListeners()));
-                },
-              ),
+//              RaisedButton(
+//                child: Text('list view with controller'),
+//                onPressed: () {
+//                  Navigator.of(context).push(MaterialPageRoute(
+//                      builder: (ctx) =>
+//                          ListScreenWithControllerAndListeners()));
+//                },
+//              ),
               RaisedButton(
                 child: Text('Column'),
                 onPressed: () {
@@ -98,20 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (ctx) => IndexedListScreen()));
-                },
-              ),
-              RaisedButton(
-                child: Text('Cards'),
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (ctx) => ListOfCards()));
-                },
-              ),
-              RaisedButton(
-                child: Text('Cook book'),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (ctx) => CookbookList()));
                 },
               ),
             ],
